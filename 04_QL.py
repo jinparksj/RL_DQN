@@ -28,4 +28,31 @@ for i in range(num_episodes):
     while j < 99:
         j += 1
         # Choose action as greedy from Q table being with noise
-        a = np.argmax(Q[s, : ]) + np.random.randn(1, env.action_space.n) * (1./(i+1))
+        a = np.argmax(Q[s, : ] + np.random.randn(1, env.action_space.n) * (1./(i+1)))
+        # Return a sample (or samples) from the "standard normal" distribution.
+        # 1 by 4 standard normal distribution
+        # discount factor??
+
+        #new state and reward from env
+        s1, r, d, _ = env.step(a)
+
+        # update Q table through new info
+        Q[s, a] = Q[s, a] + lr * ( r + y * np.max(Q[s1, :]) - Q[s, a])
+        rAll += r
+        s = s1
+
+        if d == True:
+            break
+
+rList.append(rAll)
+
+print(rList)
+print("Score over time: " + str(sum(rList) / num_episodes))
+print("Final Q-Table values")
+print(Q)
+
+
+
+
+
+
