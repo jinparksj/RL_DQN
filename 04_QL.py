@@ -44,12 +44,16 @@ for i in range(num_episodes):
         if d == True:
             break
 
-rList.append(rAll)
+
+    rList.append(rAll)
 
 print(rList)
 print("Score over time: " + str(sum(rList) / num_episodes))
 print("Final Q-Table values")
 print(Q)
+
+plt.plot(rList)
+plt.show()
 
 
 

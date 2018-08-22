@@ -26,9 +26,9 @@ updateModel = trainer.minimize(loss)
 init = tf.global_variables_initializer()
 
 #set up learning parameter
-y = 0.99
+y = 0.999
 e = 0.1
-num_episodes = 2000
+num_episodes = 3000
 
 #generate lists taking total rewards and step at each episode
 
@@ -60,7 +60,7 @@ with tf.Session() as sess:
                 a[0] = env.action_space.sample()
             #a[0]?? pull out [ .. ] from [[ ... ]]
             #get new status and reward from env
-            s1, r, d, _ = env.step(a[0])
+            s1, r, d, _ = env.step(a[0]) #action is input
 
             #get Q value feeding new status s1 to network
 
@@ -69,10 +69,11 @@ with tf.Session() as sess:
 
             #get maxQ and set up target value about selected action a
             maxQ1 = np.max(Q1) # choose max value from 1 by 4 matrix of Q1
-            print('allQ is', allQ)
+
             targetQ = allQ # 1 by 4
-            targetQ[0, a[0]] = r + y * maxQ1
-            print(targetQ)
+            targetQ[0, a[0]] = r + y * maxQ1 # change the value of action
+            #a[0] is 0, 1, 2, or 3
+            #above line revised the value of Q in the 1 by 4 array of Q with specific action a[0]
 
             #?????????
 
