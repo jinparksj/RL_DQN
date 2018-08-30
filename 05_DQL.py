@@ -26,9 +26,9 @@ updateModel = trainer.minimize(loss)
 init = tf.global_variables_initializer()
 
 #set up learning parameter
-y = 0.999
-e = 0.1
-num_episodes = 3000
+y = 0.99
+e = 0.2
+num_episodes = 2500
 
 #generate lists taking total rewards and step at each episode
 
@@ -92,7 +92,7 @@ with tf.Session() as sess:
 print("Percent of successful episodes: " + str(sum(rList)/num_episodes))
 
 plt.plot(rList)
-plt.plot(jList)
+#plt.plot(jList)
 plt.show()
 
 
